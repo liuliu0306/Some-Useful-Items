@@ -1,0 +1,22 @@
+
+
+digraph G {
+ rankdir=LR;
+ root1[shape=rarrow];
+ root1 -> n_0;
+ root2[shape=rarrow];
+ root2 -> n_1;
+ end[shape=rarrow];
+ n_2 -> end;
+ n_0[label="root1"];
+ n_1[label="root2"];
+ n_2[label="end"];
+ n_3[label="A_square"];
+ n_4[label="B_square"];
+ n_5[label="C_add"];
+ n_0 -> n_3[label="[1, 2, 3]"];
+ n_1 -> n_4[label="[4, 5, 6]"];
+ n_3 -> n_5[label="[]"];
+ n_4 -> n_5[label="[]"];
+ n_5 -> n_2[label="[]"];
+}

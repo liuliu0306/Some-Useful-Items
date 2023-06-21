@@ -1,0 +1,84 @@
+2022-06-10 17:48:14,885-INFO-execute:
+Epoch-1
+
+2022-06-10 17:48:14,885-INFO-execute:
+Update Node:A_square
+
+2022-06-10 17:48:14,994-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', [2, 3]], ['root2', 'B_square', [4, 5, 6]], ['A_square', 'C_add', [1]], ['B_square', 'C_add', []], ['C_add', 'end', []]]
+
+
+2022-06-10 17:48:14,994-INFO-execute:
+Update Node:B_square
+
+2022-06-10 17:48:15,099-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', [2, 3]], ['root2', 'B_square', [5, 6]], ['A_square', 'C_add', [1]], ['B_square', 'C_add', [16]], ['C_add', 'end', []]]
+
+
+2022-06-10 17:48:15,099-INFO-execute:
+Epoch-2
+
+2022-06-10 17:48:15,099-INFO-execute:
+Update Node:A_square
+
+2022-06-10 17:48:15,178-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', [3]], ['root2', 'B_square', [5, 6]], ['A_square', 'C_add', [1, 4]], ['B_square', 'C_add', [16]], ['C_add', 'end', []]]
+
+
+2022-06-10 17:48:15,178-INFO-execute:
+Update Node:B_square
+
+2022-06-10 17:48:15,275-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', [3]], ['root2', 'B_square', [6]], ['A_square', 'C_add', [1, 4]], ['B_square', 'C_add', [16, 25]], ['C_add', 'end', []]]
+
+
+2022-06-10 17:48:15,275-INFO-execute:
+Update Node:C_add
+
+2022-06-10 17:48:15,354-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', [3]], ['root2', 'B_square', [6]], ['A_square', 'C_add', [4]], ['B_square', 'C_add', [25]], ['C_add', 'end', [17]]]
+
+
+2022-06-10 17:48:15,354-INFO-execute:
+Epoch-3
+
+2022-06-10 17:48:15,354-INFO-execute:
+Update Node:A_square
+
+2022-06-10 17:48:15,432-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', []], ['root2', 'B_square', [6]], ['A_square', 'C_add', [4, 9]], ['B_square', 'C_add', [25]], ['C_add', 'end', [17]]]
+
+
+2022-06-10 17:48:15,432-INFO-execute:
+Update Node:B_square
+
+2022-06-10 17:48:15,529-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', []], ['root2', 'B_square', []], ['A_square', 'C_add', [4, 9]], ['B_square', 'C_add', [25, 36]], ['C_add', 'end', [17]]]
+
+
+2022-06-10 17:48:15,529-INFO-execute:
+Update Node:C_add
+
+2022-06-10 17:48:15,607-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', []], ['root2', 'B_square', []], ['A_square', 'C_add', [9]], ['B_square', 'C_add', [36]], ['C_add', 'end', [17, 29]]]
+
+
+2022-06-10 17:48:15,607-INFO-execute:
+Epoch-4
+
+2022-06-10 17:48:15,607-INFO-execute:
+Update Node:C_add
+
+2022-06-10 17:48:15,670-INFO-execute:
+Current token_vec:
+[['root1', 'A_square', []], ['root2', 'B_square', []], ['A_square', 'C_add', []], ['B_square', 'C_add', []], ['C_add', 'end', [17, 29, 45]]]
+
+

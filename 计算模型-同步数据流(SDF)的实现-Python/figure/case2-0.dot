@@ -1,0 +1,14 @@
+
+
+digraph G {
+ rankdir=LR;
+ root1[shape=rarrow];
+ root1 -> n_0;
+ end[shape=rarrow];
+ n_1 -> end;
+ n_0[label="root1"];
+ n_1[label="end"];
+ n_2[label="A_cube"];
+ n_0 -> n_2[label="[2, 3, 4]"];
+ n_2 -> n_1[label="[]"];
+}
