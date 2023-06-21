@@ -45,7 +45,7 @@ hello.execute()
 
 下图是SDF的输出: 
 
-! [SDF输出的示例图片] (./figure/run.png)
+![SDF输出的示例图片](figure/run.png)
 
 
 ## 细节
