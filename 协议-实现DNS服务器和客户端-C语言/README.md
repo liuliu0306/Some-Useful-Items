@@ -47,7 +47,7 @@
    ```
 得到命令行输出
 
-![dig-output](/fig/dig.png)
+![dig-output](./fig/dig.png)
 
 
 2. 向远程的谷歌DNS服务器8.8.8.8发送查询报文测试client.cpp是否运行
@@ -58,7 +58,7 @@
    ```
 得到命令行输出 
 
-![client-8.8.8.8](/fig/client-8.8.8.8.png)
+![client-8.8.8.8](./fig/client-8.8.8.8.png)
 
 
 3. 测试server和client
@@ -74,8 +74,8 @@
    ```
 客户端输出 
 
-![client-output](/fig/server-client.png)
+![client-output](./fig/server-client.png)
 
 服务器最终输出 
 
-![client-server](/fig/server.png)
+![client-server](./fig/server.png)
