@@ -1,0 +1,382 @@
+<html>
+  <head>
+  	
+  	<meta name="author" content="liurh"/>
+  	<meta name="date" content="2021/10/24" />
+  	<meta charset="UTF-8">
+  	
+    <link rel="stylesheet" href="./reveal.js-4.1.2/dist/reveal.css">
+    <link rel="stylesheet" href="./reveal.js-4.1.2/dist/theme/white.css">
+    
+    <style>html,body,div,img{width:100%;height:100%;margin:0;padding:0;}</style>
+    
+    <script>
+    
+/*      变量初始化
+				session->session数量(修改session需要添加slide!)
+				session_trial->每个session的trial数量
+				trials->总trials数量
+*/
+        var session = 5;
+        var session_trial = 75;
+        var trials = session*session_trial;
+/*       
+	      init记录初始N个session的随机值
+				label记录标签
+				temp记录(label-init)剩下的值
+				result记录最终的输出序列
+				0->左手; 1->右手; 2->空闲
+*/
+				
+        var init = new Array(session);
+        var label = new Array(trials);
+        var result = new Array(trials);
+        var temp = new Array(trials-session);
+        
+				var banners = ["./gif/left.gif","./gif/right.gif","./gif/rest.gif"];
+        var counter = 0;
+        
+        var startTime;
+	    	var different;
+	    	var restTime;
+	    	var rests=2500;
+	    	var trailTime=5000;
+ //-----------------------------------------         
+        function mylabel(){
+        	return [2,0,0,1,2,0,0,1,0,2,1,1,1,2,2,2,2,0,0,1,1,1,0,1,1,1,0,2,0,2,1,1,2,1,0,2,1,2,1,0,1,2,2,1,2,1,1,1,0,2,1,0,1,0,2,0,2,2,1,0,1,1,2,1,1,0,1,0,0,2,2,2,2,1,0,0,2,1,2,0,1,1,0,0,2,1,1,1,1,1,1,2,1,2,2,2,0,1,1,1,0,2,2,0,2,0,2,1,1,1,0,1,1,1,1,0,0,1,2,0,2,1,0,0,2,0,1,0,0,0,2,2,1,2,0,0,0,2,2,1,1,2,0,0,1,1,2,1,2,2,1,1,2,1,1,2,2,0,0,2,0,0,2,2,2,1,1,0,2,2,2,0,1,0,1,2,0,1,2,1,2,2,1,2,2,0,2,0,1,2,2,2,0,0,1,2,1,1,1,2,2,0,0,2,2,2,2,0,0,0,1,1,0,2,2,0,1,2,1,2,2,1,0,0,1,0,2,2,1,0,2,2,2,2,0,2,2,1,1,2,1,0,0,2,2,1,1,0,0,0,2,0,1,0,0,0,0,1,0,2,2,0,1,1,1,1,0,2,1,2,2,1,1,1,1,0,0,1,1,2,2,1,2,0,2,1,2,2,1,2,1,0,0,1,2,2,1,1,2,2,1,2,0,2,1,2,1,0,2,0,1,2,1,1,2,2,0,0,0,0,2,0,1,0,1,2,1,2,2,0,2,1,2,2,0,1,2,2,0,2,1,0,1,1,2,1,2,1,2,0,2,2,2,0,2,2,1,2,1,0,2,0,0,1,0,1,1,2,1,0,2,1,1,2,2]	 
+        }
+        
+//      [2,0,0,1,2,0,0,1,0,2,1,1,1,2,2,2,2,0,0,1,1,1,0,1,1,1,0,2,0,2,1,1,2,1,0,2,1,2,1,0,1,2,2,1,2,1,1,1,0,2,1,0,1,0,2,0,2,2,1,0,1,1,2,1,1,0,1,0,0,2,2,2,2,1,0,0,2,1,2,0,1,1,0,0,2,1,1,1,1,1,1,2,1,2,2,2,0,1,1,1,0,2,2,0,2,0,2,1,1,1,0,1,1,1,1,0,0,1,2,0,2,1,0,0,2,0,1,0,0,0,2,2,1,2,0,0,0,2,2,1,1,2,0,0,1,1,2,1,2,2,1,1,2,1,1,2,2,0,0,2,0,0,2,2,2,1,1,0,2,2,2,0,1,0,1,2,0,1,2,1,2,2,1,2,2,0,2,0,1,2,2,2,0,0,1,2,1,1,1,2,2,0,0,2,2,2,2,0,0,0,1,1,0,2,2,0,1,2,1,2,2,1,0,0,1,0,2,2,1,0,2,2,2,2,0,2,2,1,1,2,1,0,0,2,2,1,1,0,0,0,2,0,1,0,0,0,0,1,0,2,2,0,1,1,1,1,0,2,1,2,2,1,1,1,1,0,0,1,1,2,2,1,2,0,2,1,2,2,1,2,1,0,0,1,2,2,1,1,2,2,1,2,0,2,1,2,1,0,2,0,1,2,1,1,2,2,0,0,0,0,2,0,1,0,1,2,1,2,2,0,2,1,2,2,0,1,2,2,0,2,1,0,1,1,2,1,2,1,2,0,2,2,2,0,2,2,1,2,1,0,2,0,0,1,0,1,1,2,1,0,2,1,1,2,2]	 
+        
+        var arr = [2,0,0,1,2,0,0,1,0,2,1,1,0,1,2]//用于测试
+				console.log(mylabel())
+        function getInit(x){
+        	var count_init = 0
+        	var count_temp = 0
+        	var mylabel = x
+        	for(i=0;i<mylabel.length;i++){
+        		if(i%session_trial == 0){
+        			init[count_init] = mylabel[i]
+        			count_init++
+        		}
+        		else{
+        			temp[count_temp] = mylabel[i]
+        			count_temp++
+        		}
+        	}
+        }
+        
+       getInit(mylabel())
+//			getInit(arr)
+        var counter_init = 0
+        var counter_temp = 0
+        function arrayEqual(arr1, arr2) {
+			    if (arr1 === arr2) return true;
+			    if (arr1.length != arr2.length) return false;
+			    for (var i = 0; i < arr1.length; ++i) {
+			        if (arr1[i] !== arr2[i]) return false;
+			    }
+			    return true;}
+        function select_s(s,v){
+        	
+        	if(arrayEqual(v,init)){
+
+	        	if(s=="banner1")
+	        		document.getElementById("banner1").src = banners[v[counter_init]];
+	        	if(s=="banner2")
+	        		document.getElementById("banner2").src = banners[v[counter_init]];
+	        	if(s=="banner3")
+	        		document.getElementById("banner3").src = banners[v[counter_init]];
+	        	if(s=="banner4")
+	        		document.getElementById("banner4").src = banners[v[counter_init]];
+	        	if(s=="banner5")
+	        		document.getElementById("banner5").src = banners[v[counter_init]];
+	        	counter_init++;
+        	}
+
+					else if(arrayEqual(v,temp)){
+						if(s=="banner1")
+	        		document.getElementById("banner1").src = banners[v[counter_temp]];
+	        	if(s=="banner2")
+	        		document.getElementById("banner2").src = banners[v[counter_temp]];
+	        	if(s=="banner3")
+	        		document.getElementById("banner3").src = banners[v[counter_temp]];
+	        	if(s=="banner4")
+	        		document.getElementById("banner4").src = banners[v[counter_temp]];
+	        	if(s=="banner5")
+	        		document.getElementById("banner5").src = banners[v[counter_temp]];
+						counter_temp++;
+					}
+						
+					counter++
+        }
+        
+        function getImg(s,n){
+        	if(n==0)
+        		select_s(s,init)
+        	else
+        		select_s(s,temp)
+        }
+        
+        function set_data_autoslide(s){
+        	different=Date.now()-startTime-trailTime
+					restTime=rests-different
+					console.log("休息时间:"+restTime)
+					document.getElementById(s).setAttribute('data-autoslide',restTime)
+        }
+//-----------------------------------------        
+        function run(s){
+//      获得gif图片
+//			随机选择[0,1,2]
+        		var num = Math.floor(Math.random()*3)
+        		
+						if(s=="banner1")
+        			document.getElementById("banner1").src = banners[num];
+        		if(s=="banner2")
+        			document.getElementById("banner2").src = banners[num];
+        		if(s=="banner3")
+        			document.getElementById("banner3").src = banners[num];
+        		if(s=="banner4")
+        			document.getElementById("banner4").src = banners[num];
+        		if(s=="banner5")
+        			document.getElementById("banner5").src = banners[num];
+        			
+//          console.log("num = "+(num)); 	
+//          console.log("counter = "+(counter)); 
+
+        		label[counter] = num;
+        		counter++;           
+        }
+        
+				function getLabel(label){
+//			计算最终的输出序列result，由init和temp组成，init存储所有session第一个刺激，temp存储每个session之后的数据
+					m = 0;
+					for(k=0;k<init.length;k++){
+						init[k] = label[k]
+					}
+					for(i=0;i<temp.length;i++){
+						temp[i] = label[i+init.length]
+					}
+					for(j=0;j<label.length;j++){
+							if(j%session_trial == 0){
+								result[j] = init[parseInt(j/session_trial)]
+							}
+							else{
+								result[j] = temp[m]
+								m++
+							}
+						}
+					
+				}
+
+  </script>
+        
+  </head>
+
+    <div class="reveal">
+      <div class="slides">
+
+
+      	<!--SESSION 1-->
+	      <section data-background-color="rgb(0,0,0)" data-transition="none" id="first">
+	      	<h2>运动想象实验即将开始,</h2> <br/><br/>
+	      	<h2>按空格键继续......	</h2>
+	      	
+	       </section> 
+	        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" id="second"><h2>Session 1 即将开始</h2></section>
+        
+        <section data-autoslide="1000" id="img1" data-background-color="rgb(0,0,0)">
+	        <!--<video data-autoplay src="./left.mp4">	</video>-->
+	        <img id="banner1" alt="banner1" src="./"/>
+					<!--<script>document.getElementById("banner1").onload=run('banner1');</script>-->
+					<script>document.getElementById("banner1").onload=getImg('banner1',0);</script>
+					
+        </section>
+        
+        <!--黑屏4秒-->
+        <section data-autoslide="4000" data-background-color="rgb(0,0,0)"></section>
+        
+        <!--rest-->
+        <section data-background-color="rgb(0,0,0)" data-background-image="./gif/logo.png" data-background-size="300px" data-background-position="right top" id="rest1"><h2>休息一下......</h2></section>
+
+        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" id="q1" >
+        	<h2>Session 1 已经结束了,</h2><br/><br/>
+					<h2>可以休息一下了......</h2><br/><br/>
+					<h2>3分钟后将开始下一个Session ......</h2>
+					
+        </section>
+        
+        
+        <!--SESSION 2-->
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none" data-autoslide="10000">
+        	<h2>运动想象实验即将开始......</h2> <br/><br/>
+        </section> 
+        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none"><h2>Session 2 即将开始</h2></section>
+        
+        <section data-autoslide="1000" id="img2" data-background-color="rgb(0,0,0)">
+	        <img id="banner2" alt="banner2" src="./" />
+	        <script>document.getElementById("banner2").onload=getImg('banner2',0);;</script>
+        </section>
+        
+        <!--黑屏4秒-->
+        <section data-autoslide="4000" data-background-color="rgb(0,0,0)"></section>
+        
+        <!--rest-->
+        <section data-background-color="rgb(0,0,0)" data-background-image="./gif/logo.png" data-background-size="300px" data-background-position="right top" id="rest2"><h2>休息一下......</h2></section>
+
+        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" id="q2">
+        	<h2>Session 2已经结束了,</h2><br/><br/>
+					<h2>可以休息一下了......</h2><br/><br/>
+					<h2>3分钟后将开始下一个Session ......</h2>
+        </section>
+        
+        
+        
+        <!--SESSION 3-->
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none">
+        	<h2>运动想象实验即将开始......</h2> <br/><br/>
+        </section> 
+
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none"><h2>Session 3 即将开始</h2></section>
+        <section data-autoslide="1000" id="img3" data-background-color="rgb(0,0,0)">
+        	<img id="banner3" alt="banner3" src="./" />
+        	<script>document.getElementById("banner3").onload=getImg('banner3',0);;</script>
+        </section>
+        
+        
+        <!--黑屏4秒-->
+        <section data-autoslide="4000" data-background-color="rgb(0,0,0)"></section>
+        
+        <!--rest-->
+        <section data-background-color="rgb(0,0,0)" data-background-image="./gif/logo.png" data-background-size="300px" data-background-position="right top" id="rest3"><h2>休息一下......</h2></section>
+
+        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" id="q3">
+        	<h2>Session 3已经结束了,</h2><br/><br/>
+					<h2>可以休息一下了......</h2><br/><br/>
+					<h2>3分钟后将开始下一个Session ......</h2>
+        </section>
+        
+        
+        
+        <!--SESSION 4-->
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none"><h2>运动想象实验即将开始......</h2> <br/><br/></section>       
+        <section  data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none"><h2>Session 4 即将开始</h2></section>
+        
+        <section data-autoslide="1000" id="img4" data-background-color="rgb(0,0,0)">
+        	<img id="banner4" alt="banner4" src="./" />
+        	<script>document.getElementById("banner4").onload=getImg('banner4',0);;</script>
+        </section>
+        
+        <!--黑屏4秒-->
+        <section data-autoslide="4000" data-background-color="rgb(0,0,0)"></section>
+        
+        <!--rest-->
+        <section data-background-color="rgb(0,0,0)" data-background-image="./gif/logo.png" data-background-size="300px" data-background-position="right top" id="rest4"><h2>休息一下......</h2></section>
+
+        
+        
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" id="q4">
+        	<h2>Session 4已经结束了,</h2><br/><br/>
+					<h2>可以休息一下了......</h2><br/><br/>
+					<h2>3分钟后将开始下一个Session ......</h2>
+        </section>
+        
+        
+        
+        <!--SESSION 5-->
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)"  id="q4" data-transition="none"><h2>运动想象实验即将开始......</h2> <br/><br/></section>       
+        <section data-autoslide="1000" data-background-color="rgb(0,0,0)" data-transition="none"><h2>Session 5 即将开始</h2></section>
+        
+        <section data-autoslide="1000" id="img5" data-background-color="rgb(0,0,0)">
+        	<img id="banner5" alt="banner5" src="./" />
+        	<script>document.getElementById("banner5").onload=getImg('banner5',0);</script>
+        </section>
+        
+        <!--黑屏4秒-->
+        <section data-autoslide="4000" data-background-color="rgb(0,0,0)"></section>
+        
+        <!--rest-->
+        <section data-background-color="rgb(0,0,0)" data-background-image="./gif/logo.png" data-background-size="300px" data-background-position="right top" id="rest5"><h2>休息一下......</h2></section>
+
+        <!--实验结束-->
+        <section data-autoslide="10000" id="q5" data-background-color="rgb(0,0,0)"><h2>实验结束了，感谢你的参与!</h2></section>
+      </div>
+    </div>
+    <script src="./reveal.js-4.1.2/dist/reveal.js"></script>
+    <script>
+    	
+      Reveal.initialize({
+//    	slider初始化
+      	width: "100%",height: "110%",
+      	margin: 0,minScale: 1,
+      	maxScale: 1.2,controls: false,
+      	progress: false,overview: false,
+      	viewDistance:23,keyboard: false,
+      	transition:'none',transitionSpeed:'fast'
+      	});
+
+
+      Reveal.addEventListener('slidechanged',function(event){
+//			在手动切换slide后会暂停自动播放，也可以按 a键来暂停或恢复自动播放。      	
+//    	每张slide切换时将发生以下操作,不添加或减少slide就不需要改下面的参数!
+//			Reveal.slide跳转到指定的slide
+				Reveal.configure({keyboard:false})
+				
+				if((Reveal.getCurrentSlide().id=='q1')&&(counter-session < 1*(session_trial-1))){Reveal.slide(2);getImg('banner1',1)}
+				if((Reveal.getCurrentSlide().id=='q2')&&(counter-session < 2*(session_trial-1))){Reveal.slide(8);getImg('banner2',1)}
+				if((Reveal.getCurrentSlide().id=='q3')&&(counter-session < 3*(session_trial-1))){Reveal.slide(14);getImg('banner3',1)}
+				if((Reveal.getCurrentSlide().id=='q4')&&(counter-session < 4*(session_trial-1))){Reveal.slide(20);getImg('banner4',1)}
+				if((Reveal.getCurrentSlide().id=='q5')&&(counter-session < 5*(session_trial-1))){Reveal.slide(26);getImg('banner5',1)}
+				
+				
+				if(Reveal.getCurrentSlide().id=='img1'){startTime=Date.now()}//设置时间戳
+				if(Reveal.getCurrentSlide().id=='rest1'){set_data_autoslide('rest1')}
+				
+				if(Reveal.getCurrentSlide().id=='img2'){startTime=Date.now()}//设置时间戳
+				if(Reveal.getCurrentSlide().id=='rest2'){set_data_autoslide('rest2')}
+				
+				if(Reveal.getCurrentSlide().id=='img3'){startTime=Date.now()}//设置时间戳
+				if(Reveal.getCurrentSlide().id=='rest3'){set_data_autoslide('rest3')}
+				
+				if(Reveal.getCurrentSlide().id=='img4'){startTime=Date.now()}//设置时间戳
+				if(Reveal.getCurrentSlide().id=='rest4'){set_data_autoslide('rest4')}
+				
+				if(Reveal.getCurrentSlide().id=='img5'){startTime=Date.now()}//设置时间戳
+				if(Reveal.getCurrentSlide().id=='rest5'){set_data_autoslide('rest5')}
+	} );
+	
+	
+	
+	
+		Reveal.addEventListener('ready',function(event){
+  		if(Reveal.getCurrentSlide().id=='first'){
+				Reveal.configure({keyboard: {32:'next'}})
+			}
+//			被试按下空格键开始下一个session
+//				if((Reveal.getCurrentSlide().id=='q1')&&counter-session == 1*(session_trial-1)){
+//					Reveal.configure({keyboard: {32:'next'}})
+//				}
+//				if((Reveal.getCurrentSlide().id=='q2')&&counter-session == 2*(session_trial-1)){
+//					Reveal.configure({keyboard: {32:'next'}})
+//				}
+//				if((Reveal.getCurrentSlide().id=='q3')&&counter-session == 3*(session_trial-1)){
+//					Reveal.configure({keyboard: {32:'next'}})
+//				}
+//				if((Reveal.getCurrentSlide().id=='q4')&&counter-session == 4*(session_trial-1)){
+//					Reveal.configure({keyboard: {32:'next'}})
+//				}
+//				if((Reveal.getCurrentSlide().id=='q5')&&counter-session == 5*(session_trial-1)){
+//					Reveal.configure({keyboard: {32:'next'}})
+//				}
+				
+				if(counter == trials)
+					getLabel(label)					
+		} );
+    </script>
+  </body>
+</html>
